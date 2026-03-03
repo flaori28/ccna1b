@@ -59,6 +59,11 @@ function startQuiz(mode) {
         // Take contiguous slice from the valid list
         currentQuizQuestions = validQuestions.slice(start, end);
     }
+    
+    if (currentQuizQuestions.length === 0) {
+        alert("Cette série ne contient pas encore de questions valides.");
+        return;
+    }
 
     homeScreen.style.display = 'none';
     quizScreen.style.display = 'block';
@@ -110,6 +115,11 @@ function loadQuestion() {
     } else {
         const img = document.getElementById('question-image');
         if (img) img.style.display = 'none';
+    }
+
+    if (question.type === 'association') {
+        renderAssociationQuestion(question);
+        return;
     }
 
     const isMultiselect = Array.isArray(question.answer);
@@ -250,6 +260,12 @@ function selectOption(index, button, isMultiselect) {
 }
 
 function validateAnswer() {
+    const question = currentQuizQuestions[currentQuestionIndex];
+    if (question.type === 'association') {
+        validateAssociationAnswer(question);
+        return;
+    }
+
     if (selectedOptionIndices.length === 0) return;
 
     const question = currentQuizQuestions[currentQuestionIndex];
@@ -458,6 +474,161 @@ function showResults() {
             });
             resultMessageContainer.appendChild(detailsDiv);
         }
+    }
+}
+
+
+function renderAssociationQuestion(question) {
+    // Restauration de l'état
+    const savedAnswer = userAnswers.find(a => a.questionIndex === currentQuestionIndex);
+
+    const pairsValues = Object.entries(question.matchPairs);
+    // Keys (Descriptions)
+    const keys = pairsValues.map(p => p[0]);
+    // Values (IPs) - shuffle them
+    let values = pairsValues.map(p => p[1]);
+    
+    // Simple shuffle
+    for (let i = values.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [values[i], values[j]] = [values[j], values[i]];
+    }
+
+    const container = document.createElement('div');
+    container.className = 'association-container';
+    container.style.marginTop = '20px';
+    
+    keys.forEach((key) => {
+        const row = document.createElement('div');
+        row.className = 'association-row';
+        row.style.marginBottom = '15px';
+        row.style.display = 'flex';
+        row.style.alignItems = 'center';
+        row.style.justifyContent = 'space-between';
+        row.style.flexWrap = 'wrap'; 
+        row.style.gap = '10px';
+
+        const label = document.createElement('span');
+        label.textContent = key;
+        label.style.flex = '1 1 45%'; // min width
+        label.style.fontWeight = 'bold';
+
+        const select = document.createElement('select');
+        select.className = 'association-select';
+        select.style.flex = '1 1 45%';
+        select.style.padding = '8px';
+        select.dataset.key = key; 
+        
+        const defaultOption = document.createElement('option');
+        defaultOption.text = 'Choisir...';
+        defaultOption.value = '';
+        select.add(defaultOption);
+
+        values.forEach(val => {
+            const opt = document.createElement('option');
+            opt.text = val;
+            opt.value = val;
+            select.add(opt);
+        });
+
+        // Restore previous answer
+        if (savedAnswer && savedAnswer.selectedPairs) {
+             select.value = savedAnswer.selectedPairs[key] || '';
+             // If training mode and saved, disable
+             if (currentMode === 'training') select.disabled = true;
+        }
+
+        row.appendChild(label);
+        row.appendChild(select);
+        container.appendChild(row);
+    });
+
+    optionsContainer.appendChild(container);
+
+    // Validate button logic
+    if (savedAnswer && currentMode === 'training') {
+        validateAssociationAnswer(question, true); // replay feedback
+    } else {
+        validateBtn.style.display = 'inline-block';
+        // Note: global check button calls validateAnswer(), which delegates to validateAssociationAnswer
+    }
+}
+
+function validateAssociationAnswer(question, replay=false) {
+    const selects = optionsContainer.querySelectorAll('select.association-select');
+    let allCorrect = true;
+    const userPairs = {};
+    let missingSelection = false;
+    
+    selects.forEach(select => {
+        const key = select.dataset.key;
+        userPairs[key] = select.value;
+        if (!select.value) missingSelection = true;
+        if (select.value !== question.matchPairs[key]) {
+             allCorrect = false;
+        }
+    });
+
+    if (missingSelection && !replay) {
+        alert('Veuillez sélectionner une réponse pour chaque élément.');
+        return;
+    }
+
+    if (!replay) {
+         // Save answer
+        const existingIndex = userAnswers.findIndex(a => a.questionIndex === currentQuestionIndex);
+        if (existingIndex === -1) {
+            userAnswers.push({
+                questionIndex: currentQuestionIndex,
+                selectedPairs: userPairs,
+                isCorrect: allCorrect
+            });
+            if (allCorrect) score++;
+        }
+    }
+
+    // Visual feedback
+    selects.forEach(select => {
+        const key = select.dataset.key;
+        select.disabled = true; // Disable regardless of mode once validated
+        
+        const parent = select.parentNode;
+        // remove old feedback if any
+        const existingMsg = parent.querySelector('.assoc-feedback');
+        if(existingMsg) existingMsg.remove();
+        
+        if (select.value === question.matchPairs[key]) {
+            select.style.border = '2px solid #2ecc71';
+            select.style.backgroundColor = '#eafaf1';
+        } else {
+            select.style.border = '2px solid #e74c3c';
+            select.style.backgroundColor = '#fadbd8';
+            if (currentMode === 'training') {
+                const correctSpan = document.createElement('div');
+                correctSpan.className = 'assoc-feedback';
+                correctSpan.textContent = 'Correction: ' + question.matchPairs[key];
+                correctSpan.style.color = '#c0392b';
+                correctSpan.style.fontSize = '0.9em';
+                correctSpan.style.marginTop = '4px';
+                correctSpan.style.width = '100%'; 
+                parent.appendChild(correctSpan);
+            }
+        }
+    });
+
+    validateBtn.style.display = 'none';
+    nextBtn.style.display = 'inline-block';
+    
+    if (currentMode === 'training') {
+        if (allCorrect) {
+            feedback.textContent = 'Tout est correct !';
+            feedback.className = 'feedback success';
+        } else {
+            feedback.textContent = 'Il y a des erreurs. Voir les corrections.';
+            feedback.className = 'feedback error';
+        }
+        feedback.style.display = 'block';
+        updateScoreDisplay();
     }
 }
 
