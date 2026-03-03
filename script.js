@@ -78,16 +78,6 @@ function startQuiz(mode) {
 
 function loadQuestion() {
     const question = currentQuizQuestions[currentQuestionIndex];
-    
-    if (!question) {
-        questionText.innerHTML = "Cette question est manquante ou en cours de chargement.";
-        optionsContainer.innerHTML = "";
-        feedback.innerHTML = "";
-        nextBtn.style.display = 'inline-block';
-        validateBtn.style.display = 'none';
-        return;
-    }
-
     questionText.innerHTML = question.question;
     optionsContainer.innerHTML = '';
     feedback.innerHTML = '';
@@ -278,7 +268,6 @@ function validateAnswer() {
 
     if (selectedOptionIndices.length === 0) return;
 
-    const question = currentQuizQuestions[currentQuestionIndex];
     let isCorrect = false;
     let correctAnswers = [];
 
