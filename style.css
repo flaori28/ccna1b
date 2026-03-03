@@ -132,3 +132,55 @@ h1 {
     color: #7f8c8d;
     font-size: 0.9rem;
 }
+
+/* Glossary Styles */
+.glossary-container {
+    margin-top: 15px;
+    text-align: left;
+}
+
+.glossary-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.glossary-btn:hover {
+    background-color: #2980b9;
+}
+
+.glossary-content {
+    display: none;
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.glossary-content h4 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.glossary-term {
+    margin-bottom: 8px;
+}
+
+.glossary-term strong {
+    color: #2980b9;
+}

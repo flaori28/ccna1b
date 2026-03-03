@@ -179,6 +179,34 @@ function validateAnswer() {
             const correctText = correctAnswers.map(i => question.options[i]).join("<br>- ");
             feedback.innerHTML = `Mauvaise réponse. Les bonnes réponses étaient :<br>- ${correctText}`;
         }
+        
+        // --- Logic glossaire ---
+        const glossaryTerms = findGlossaryTerms(question.question);
+        if (glossaryTerms.length > 0) {
+            const glossaryContainer = document.createElement('div');
+            glossaryContainer.className = 'glossary-container';
+            glossaryContainer.style.marginTop = '15px';
+            glossaryContainer.style.borderTop = '1px solid #ccc';
+            glossaryContainer.style.paddingTop = '10px';
+            
+            const title = document.createElement('h4');
+            title.textContent = "Mots-clés et Définitions :";
+            title.style.margin = '0 0 10px 0';
+            title.style.fontSize = '0.9em';
+            glossaryContainer.appendChild(title);
+            
+            glossaryTerms.forEach(item => {
+                const termDiv = document.createElement('div');
+                termDiv.style.marginBottom = '5px';
+                termDiv.style.fontSize = '0.9em';
+                termDiv.innerHTML = `<strong style="color:#2980b9">${item.term}:</strong> ${item.definition}`;
+                glossaryContainer.appendChild(termDiv);
+            });
+            
+            feedback.appendChild(glossaryContainer);
+        }
+        // --- Fin Logic glossaire ---
+
         feedback.style.display = 'block';
         updateScoreDisplay();
     } else {
@@ -247,6 +275,17 @@ function showResults() {
                 const userRespText = ans.selected.map(i => q.options[i]).join(", ");
                 // Formatter les bonnes réponses
                 const correctRespText = ans.correctAnswer.map(i => q.options[i]).join(", ");
+                
+                // --- Logic Glossaire ---
+                const glossaryTerms = findGlossaryTerms(q.question);
+                let glossaryHTML = "";
+                if (glossaryTerms.length > 0) {
+                     glossaryHTML = `<div style="margin-top:10px; padding-top:10px; border-top:1px dashed #ccc; font-size:0.9em;">` +
+                     `<strong>Mots-clés:</strong><br>` +
+                     glossaryTerms.map(t => `• <strong>${t.term}:</strong> ${t.definition}`).join("<br>") +
+                     `</div>`;
+                }
+                // --- Fin Logic Glossaire ---
 
                 const item = document.createElement('div');
                 item.style.marginBottom = '15px';
@@ -255,7 +294,7 @@ function showResults() {
                 item.style.border = '1px solid #eee';
                 item.innerHTML = `<strong>Question:</strong> ${q.question}<br>
                                  <span style="color: #e74c3c">Vos réponses: ${userRespText}</span><br>
-                                 <span style="color: #2ecc71">Bonnes réponses: ${correctRespText}</span>`;
+                                 <span style="color: #2ecc71">Bonnes réponses: ${correctRespText}</span>${glossaryHTML}`;
                 detailsDiv.appendChild(item);
             });
             resultMessageContainer.appendChild(detailsDiv);
