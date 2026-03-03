@@ -13,6 +13,7 @@ const questionText = document.getElementById('question-text');
 const optionsContainer = document.getElementById('options-container');
 const nextBtn = document.getElementById('next-btn');
 const validateBtn = document.getElementById('validate-btn');
+const prevBtn = document.getElementById('prev-btn');
 const feedback = document.getElementById('feedback');
 const counterDisplay = document.getElementById('question-counter');
 const scoreDisplay = document.getElementById('score-display');
@@ -48,7 +49,16 @@ function loadQuestion() {
     // Réinitialiser les boutons
     nextBtn.style.display = 'none';
     validateBtn.style.display = 'none';
-    selectedOptionIndices = [];
+    prevBtn.style.display = (currentQuestionIndex > 0) ? 'inline-block' : 'none';
+
+    // Restauration de l'état (Mode Exam principalement)
+    const savedAnswer = userAnswers.find(a => a.questionIndex === currentQuestionIndex);
+    if (savedAnswer) {
+        selectedOptionIndices = [...savedAnswer.selected];
+        validateBtn.style.display = 'inline-block';
+    } else {
+        selectedOptionIndices = [];
+    }
     
     counterDisplay.innerHTML = `Question ${currentQuestionIndex + 1}/${questions.length}`;
 
@@ -85,6 +95,11 @@ function loadQuestion() {
         const button = document.createElement('button');
         button.innerHTML = option;
         button.classList.add('option-btn');
+        if (selectedOptionIndices.includes(index)) {
+             button.classList.add('selected');
+             button.style.backgroundColor = '#3498db';
+             button.style.color = 'white';
+        }
         button.onclick = () => selectOption(index, button, isMultiselect);
         optionsContainer.appendChild(button);
     });
@@ -211,13 +226,39 @@ function validateAnswer() {
         updateScoreDisplay();
     } else {
         // Mode Exam
-        userAnswers.push({
-            questionIndex: currentQuestionIndex,
-            selected: [...selectedOptionIndices], // Copie
-            isCorrect: isCorrect,
-            correctAnswer: correctAnswers // Stocker pour affichage résultats
-        });
-        if (isCorrect) score++;
+        const existingIndex = userAnswers.findIndex(a => a.questionIndex === currentQuestionIndex);
+        
+        if (existingIndex !== -1) {
+            // Mettre à jour la réponse existante et ajuster le score
+            if (userAnswers[existingIndex].isCorrect && !isCorrect) {
+                 score--;
+            } else if (!userAnswers[existingIndex].isCorrect && isCorrect) {
+                 score++;
+            }
+            
+            userAnswers[existingIndex] = {
+                questionIndex: currentQuestionIndex,
+                selected: [...selectedOptionIndices],
+                isCorrect: isCorrect,
+                correctAnswer: correctAnswers
+            };
+        } else {
+            // Nouvelle réponse
+            userAnswers.push({
+                questionIndex: currentQuestionIndex,
+                selected: [...selectedOptionIndices], // Copie
+                isCorrect: isCorrect,
+                correctAnswer: correctAnswers // Stocker pour affichage résultats
+            });
+            if (isCorrect) score++;
+        }
+    }
+}
+
+function prevQuestion() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
     }
 }
 
