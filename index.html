@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz CCNA1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz CCNA1</h1>
+        
+        <!-- Menu principal -->
+        <div id="home" class="screen active">
+            <p>Choisissez votre mode de jeu :</p>
+            <button onclick="startQuiz('training')" class="btn">Mode Entraînement (Réponse immédiate)</button>
+            <button onclick="startQuiz('exam')" class="btn">Mode Examen (Toutes les questions, résultats à la fin)</button>
+            <button onclick="startQuiz('series60')" class="btn" style="background-color: #8e44ad;">Mode Examen Blanc (60 questions aléatoires)</button>
+        </div>
+
+        <!-- Écran du quiz -->
+        <div id="quiz" class="screen" style="display: none;">
+            <div class="quiz-header">
+                <span id="question-counter">Question 1/5</span>
+                <span id="score-display" style="display: none;">Score: 0</span>
+            </div>
+            <h2 id="question-text">Question...</h2>
+            <div id="options-container" class="options-grid">
+                <!-- Les options seront générées ici -->
+            </div>
+            <div id="feedback" class="feedback" style="display: none;"></div>
+            <button id="validate-btn" class="btn" style="display: none; margin-top: 20px; background-color: #2ecc71;" onclick="validateAnswer()">Valider</button>
+            <button id="next-btn" class="btn next-btn" style="display: none;" onclick="nextQuestion()">Suivant</button>
+        </div>
+
+        <!-- Écran de résultats -->
+        <div id="results" class="screen" style="display: none;">
+            <h2>Résultats</h2>
+            <div class="score-circle">
+                <span id="final-score">0%</span>
+            </div>
+            <div id="result-message"></div>
+            <button onclick="location.reload()" class="btn">Retour au menu</button>
+        </div>
+    </div>
+
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
