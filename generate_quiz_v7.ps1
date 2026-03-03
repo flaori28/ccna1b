@@ -251,14 +251,19 @@ $htmlTemplate = @'
         <h1>CCNA 1 - ITN v7.0</h1>
         <p style="text-align:center; color:#7f8c8d;">Entra&icirc;nement et Examens</p>
         
-        <button class="btn btn-mode bg-train" onclick="startQuiz('training')">
+        <button class="btn btn-mode bg-train" onclick="startQuiz('training', 60)">
             <strong>Mode Entra&icirc;nement</strong><br>
             <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">60 questions al&eacute;atoires. Correction imm&eacute;diate.</span>
         </button>
         
-        <button class="btn btn-mode bg-exam" onclick="startQuiz('exam')">
+        <button class="btn btn-mode bg-exam" onclick="startQuiz('exam', 60)">
             <strong>Mode Examen</strong><br>
             <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">60 questions al&eacute;atoires. R&eacute;sultat final.</span>
+        </button>
+
+        <button class="btn btn-mode bg-series" onclick="startQuiz('training', 'all')">
+            <strong>Mode Int&eacute;gral</strong><br>
+            <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">Toutes les questions (mix &eacute;galement). Mode entra&icirc;nement.</span>
         </button>
         
         <div style="margin-top:30px;">
@@ -320,11 +325,16 @@ $htmlTemplate = @'
             document.getElementById('view-result').style.display = 'none';
         }
 
-        function startQuiz(mode) {
+        function startQuiz(mode, count) {
             currentMode = mode;
-            // Shuffle and take 60 for both modes, as requested by user ("refait le mode examen et entrainement mais avec 60 question... mixtent et melanger a chaque fois")
-            currentQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 60);
-
+            // Shuffle
+            const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+            
+            if(count === 'all') {
+                currentQuestions = shuffled;
+            } else {
+                currentQuestions = shuffled.slice(0, count);
+            }
             initSession();
         }
 
