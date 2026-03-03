@@ -108,6 +108,7 @@
         
         <div class="controls">
             <button class="nav-btn" id="btn-prev" onclick="move(-1)" style="background:#bdc3c7;">PrÃ©cÃ©dent</button>
+            <button class="nav-btn" id="btn-reset" onclick="resetQuestion()" style="background:#f39c12; display:none;">Refaire</button>
             <button class="nav-btn" id="btn-action" style="background:#27ae60; flex:2;" onclick="handleAction()">Valider</button>
             <button class="nav-btn" id="btn-next" onclick="move(1)">Suivant</button>
         </div>
@@ -4415,7 +4416,7 @@
 
             // Explanation
             if(((mode === 'training' && st.validated) || isReview) && q.explanation) {
-                html += `<div class="explanation" style="display:block"><strong>Explication:</strong><br>${q.explanation}</div>`;
+                html += `<div class="explanation" style="display:block"><strong>Explication :</strong><br>${q.explanation}</div>`;
             }
             
             document.getElementById('question-container').innerHTML = html;
