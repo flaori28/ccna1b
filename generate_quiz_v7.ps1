@@ -167,7 +167,7 @@ $htmlTemplate = @'
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz CCNA1 - Entraînement et Examen</title>
+    <title>Quiz CCNA1 - Entra&icirc;nement et Examen</title>
     <style>
         :root {
             --bg-body: #f4f6f9;
@@ -191,7 +191,7 @@ $htmlTemplate = @'
         .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         
         .btn-mode { width: 100%; margin: 10px 0; padding: 20px; font-size: 1.1rem; text-align: left; position: relative; }
-        .btn-mode::after { content: '→'; position: absolute; right: 20px; font-weight: bold; }
+        .btn-mode::after { content: '\2192'; position: absolute; right: 20px; font-weight: bold; }
         
         .bg-train { background: linear-gradient(135deg, #3498db, #2980b9); }
         .bg-exam { background: linear-gradient(135deg, #34495e, #2c3e50); }
@@ -218,8 +218,8 @@ $htmlTemplate = @'
         /* Validation Feedback (Training only) */
         .opt.correct { background-color: var(--success-bg); border-color: var(--success); color: #145a32; }
         .opt.incorrect { background-color: var(--danger-bg); border-color: var(--danger); color: #922b21; }
-        .opt.correct::after { content: "✓ Correct"; float: right; font-weight: bold; }
-        .opt.incorrect::after { content: "✗ Incorrect"; float: right; font-weight: bold; }
+        .opt.correct::after { content: "\2713 Correct"; float: right; font-weight: bold; }
+        .opt.incorrect::after { content: "\2717 Incorrect"; float: right; font-weight: bold; }
         .opt.missed { border: 2px dashed var(--success); }
         
         /* Matching Styles */
@@ -247,20 +247,20 @@ $htmlTemplate = @'
     <!-- HOME -->
     <div class="container" id="view-home">
         <h1>CCNA 1 - ITN v7.0</h1>
-        <p style="text-align:center; color:#7f8c8d;">Entraînement et Examens</p>
+        <p style="text-align:center; color:#7f8c8d;">Entra&icirc;nement et Examens</p>
         
         <button class="btn btn-mode bg-train" onclick="startQuiz('training')">
-            <strong>Mode Entraînement</strong><br>
-            <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">Correction immédiate question par question.</span>
+            <strong>Mode Entra&icirc;nement</strong><br>
+            <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">Correction imm&eacute;diate question par question.</span>
         </button>
         
         <button class="btn btn-mode bg-exam" onclick="startQuiz('exam')">
             <strong>Mode Examen</strong><br>
-            <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">Pas d'aide, résultat et pourcentage à la fin.</span>
+            <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">Pas d'aide, r&eacute;sultat et pourcentage &agrave; la fin.</span>
         </button>
         
         <div style="margin-top:30px;">
-            <h3>Séries (10 questions)</h3>
+            <h3>S&eacute;ries (10 questions)</h3>
             <div class="series-grid" id="series-list"></div>
         </div>
     </div>
@@ -275,7 +275,7 @@ $htmlTemplate = @'
         <div id="q-box"></div>
         
         <div class="controls">
-            <button class="btn btn-nav bg-nav" id="btn-prev" onclick="move(-1)">Précédent</button>
+            <button class="btn btn-nav bg-nav" id="btn-prev" onclick="move(-1)">Pr&eacute;c&eacute;dent</button>
             <button class="btn btn-nav bg-valid" id="btn-valid" onclick="validate()">Valider</button>
             <button class="btn btn-nav bg-train" id="btn-next" onclick="move(1)">Suivant</button>
         </div>
@@ -283,7 +283,7 @@ $htmlTemplate = @'
 
     <!-- RESULT -->
     <div class="container" id="view-result" style="display:none; text-align:center;">
-        <h1>Résultats</h1>
+        <h1>R&eacute;sultats</h1>
         <div id="score-display"></div>
         <p id="score-msg"></p>
         
@@ -607,5 +607,6 @@ $htmlTemplate = @'
 '@
 
 $html = $htmlTemplate.Replace('__JSON_DATA__', $json)
-$html | Out-File $outputHtml -Encoding UTF8
+# Use .NET to write file to ensure UTF8 without BOM issues if possible, or standard UTF8
+[System.IO.File]::WriteAllText($outputHtml, $html, [System.Text.Encoding]::UTF8)
 Write-Host "V7 Generated Successfully."
