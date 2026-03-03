@@ -4427,7 +4427,7 @@
         for(let i=1; i<=totalSeries; i++) {
             const b = document.createElement('button');
             b.className = 'btn-mini bg-series';
-            b.innerText = `SÃ©rie ${i}`;
+            b.innerText = `S\u00e9rie ${i}`;
             b.onclick = () => startSeries(i);
             seriesCont.appendChild(b);
         }
@@ -4494,15 +4494,15 @@
             // HTML Build
             const status = document.getElementById('quiz-status');
             status.innerText = `Question ${currentIndex + 1} / ${currentQuestions.length}`;
-            status.innerHTML += ` <span class="badge">${currentMode === 'exam' ? 'Examen' : 'EntraÃ®nement'}</span>`;
+            status.innerHTML += ` <span class="badge">${currentMode === 'exam' ? 'Examen' : 'Entra&icirc;nement'}</span>`;
 
             let html = `<div class="q-text">${q.text}</div>`;
             
             // Info / Instruction
             if(q.type === 'info') {
-                html += `<div class="box-info">Regardez l'illustration et formulez votre rÃ©ponse, puis validez pour comparer.</div>`;
+                html += `<div class="box-info">Regardez l'illustration et formulez votre r&eacute;ponse, puis validez pour comparer.</div>`;
             } else if (q.type === 'matching') {
-                html += `<div class="box-info">Faites correspondre les Ã©lÃ©ments (sÃ©lectionnez dans la liste).</div>`;
+                html += `<div class="box-info">Faites correspondre les &eacute;l&eacute;ments (s&eacute;lectionnez dans la liste).</div>`;
             }
 
             if(q.image && q.type !== 'matching') { 
@@ -4586,13 +4586,13 @@
             if(isReviewing) {
                 btnValid.style.display = 'none';
                 btnNext.style.display = 'block';
-                btnNext.innerText = (currentIndex === currentQuestions.length - 1) ? "Retour RÃ©sultats" : "Suivant";
+                btnNext.innerText = (currentIndex === currentQuestions.length - 1) ? "Retour R&eacute;sultats" : "Suivant";
                 btnNext.onclick = (currentIndex === currentQuestions.length - 1) ? () => { document.getElementById('view-result').style.display = 'block'; document.getElementById('view-quiz').style.display = 'none'; } : () => move(1);
             } else if (currentMode === 'training') {
                 if(st.validated) {
                     btnValid.style.display = 'none';
                     btnNext.style.display = 'block';
-                    btnNext.innerText = (currentIndex === currentQuestions.length - 1) ? "Voir RÃ©sultats" : "Suivant";
+                    btnNext.innerText = (currentIndex === currentQuestions.length - 1) ? "Voir R&eacute;sultats" : "Suivant";
                 } else {
                     btnValid.style.display = 'block';
                     btnNext.style.display = 'none'; // Force validate first
@@ -4709,8 +4709,8 @@
             const msg = document.getElementById('score-msg');
             
             circle.innerHTML = `<div class="score-circle ${pct >= 75 ? 'score-good' : 'score-bad'}">${pct}%</div>`;
-            msg.innerHTML = `Vous avez obtenu <strong>${correctCount}</strong> bonnes rÃ©ponses sur <strong>${totalScorable}</strong> questions Ã©valuables.<br>` +
-                            (pct >= 75 ? "Excellent travail !" : "EntraÃ®nez-vous encore un peu.");
+            msg.innerHTML = `Vous avez obtenu <strong>${correctCount}</strong> bonnes r&eacute;ponses sur <strong>${totalScorable}</strong> questions &eacute;valuables.<br>` +
+                            (pct >= 75 ? "Excellent travail !" : "Entra&icirc;nez-vous encore un peu.");
         }
         
         function reviewMode() {

@@ -10,7 +10,9 @@ if (-not (Test-Path $sourceFile)) {
     Invoke-WebRequest -Uri $url -OutFile $sourceFile
 }
 
-$content = Get-Content -Path $sourceFile -Raw -Encoding UTF8
+# Force read as UTF-8
+$content = [System.IO.File]::ReadAllText("$PWD\$sourceFile", [System.Text.Encoding]::UTF8)
+
 
 # --- CLEANING PHASE ---
 $content = $content -replace '(?s)<script.*?</script>', ''
@@ -307,7 +309,7 @@ $htmlTemplate = @'
         for(let i=1; i<=totalSeries; i++) {
             const b = document.createElement('button');
             b.className = 'btn-mini bg-series';
-            b.innerText = `Série ${i}`;
+            b.innerText = `S\u00e9rie ${i}`;
             b.onclick = () => startSeries(i);
             seriesCont.appendChild(b);
         }
@@ -374,15 +376,15 @@ $htmlTemplate = @'
             // HTML Build
             const status = document.getElementById('quiz-status');
             status.innerText = `Question ${currentIndex + 1} / ${currentQuestions.length}`;
-            status.innerHTML += ` <span class="badge">${currentMode === 'exam' ? 'Examen' : 'Entraînement'}</span>`;
+            status.innerHTML += ` <span class="badge">${currentMode === 'exam' ? 'Examen' : 'Entra&icirc;nement'}</span>`;
 
             let html = `<div class="q-text">${q.text}</div>`;
             
             // Info / Instruction
             if(q.type === 'info') {
-                html += `<div class="box-info">Regardez l'illustration et formulez votre réponse, puis validez pour comparer.</div>`;
+                html += `<div class="box-info">Regardez l'illustration et formulez votre r&eacute;ponse, puis validez pour comparer.</div>`;
             } else if (q.type === 'matching') {
-                html += `<div class="box-info">Faites correspondre les éléments (sélectionnez dans la liste).</div>`;
+                html += `<div class="box-info">Faites correspondre les &eacute;l&eacute;ments (s&eacute;lectionnez dans la liste).</div>`;
             }
 
             if(q.image && q.type !== 'matching') { 
@@ -466,13 +468,13 @@ $htmlTemplate = @'
             if(isReviewing) {
                 btnValid.style.display = 'none';
                 btnNext.style.display = 'block';
-                btnNext.innerText = (currentIndex === currentQuestions.length - 1) ? "Retour Résultats" : "Suivant";
+                btnNext.innerText = (currentIndex === currentQuestions.length - 1) ? "Retour R&eacute;sultats" : "Suivant";
                 btnNext.onclick = (currentIndex === currentQuestions.length - 1) ? () => { document.getElementById('view-result').style.display = 'block'; document.getElementById('view-quiz').style.display = 'none'; } : () => move(1);
             } else if (currentMode === 'training') {
                 if(st.validated) {
                     btnValid.style.display = 'none';
                     btnNext.style.display = 'block';
-                    btnNext.innerText = (currentIndex === currentQuestions.length - 1) ? "Voir Résultats" : "Suivant";
+                    btnNext.innerText = (currentIndex === currentQuestions.length - 1) ? "Voir R&eacute;sultats" : "Suivant";
                 } else {
                     btnValid.style.display = 'block';
                     btnNext.style.display = 'none'; // Force validate first
@@ -589,8 +591,8 @@ $htmlTemplate = @'
             const msg = document.getElementById('score-msg');
             
             circle.innerHTML = `<div class="score-circle ${pct >= 75 ? 'score-good' : 'score-bad'}">${pct}%</div>`;
-            msg.innerHTML = `Vous avez obtenu <strong>${correctCount}</strong> bonnes réponses sur <strong>${totalScorable}</strong> questions évaluables.<br>` +
-                            (pct >= 75 ? "Excellent travail !" : "Entraînez-vous encore un peu.");
+            msg.innerHTML = `Vous avez obtenu <strong>${correctCount}</strong> bonnes r&eacute;ponses sur <strong>${totalScorable}</strong> questions &eacute;valuables.<br>` +
+                            (pct >= 75 ? "Excellent travail !" : "Entra&icirc;nez-vous encore un peu.");
         }
         
         function reviewMode() {
