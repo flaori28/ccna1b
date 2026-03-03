@@ -43,6 +43,7 @@ function loadQuestion() {
     const question = questions[currentQuestionIndex];
     questionText.innerHTML = question.question;
     optionsContainer.innerHTML = '';
+    feedback.innerHTML = '';
     feedback.style.display = 'none';
     feedback.className = 'feedback';
     
@@ -51,11 +52,11 @@ function loadQuestion() {
     validateBtn.style.display = 'none';
     prevBtn.style.display = (currentQuestionIndex > 0) ? 'inline-block' : 'none';
 
-    // Restauration de l'état (Mode Exam principalement)
+    // Restauration de l'état
     const savedAnswer = userAnswers.find(a => a.questionIndex === currentQuestionIndex);
+    
     if (savedAnswer) {
         selectedOptionIndices = [...savedAnswer.selected];
-        validateBtn.style.display = 'inline-block';
     } else {
         selectedOptionIndices = [];
     }
@@ -91,6 +92,7 @@ function loadQuestion() {
         optionsContainer.appendChild(hint);
     }
 
+    const buttons = [];
     question.options.forEach((option, index) => {
         const button = document.createElement('button');
         button.innerHTML = option;
@@ -102,7 +104,80 @@ function loadQuestion() {
         }
         button.onclick = () => selectOption(index, button, isMultiselect);
         optionsContainer.appendChild(button);
+        buttons.push(button);
     });
+
+    // Logique de restauration visuelle selon le mode
+    if (savedAnswer) {
+        if (currentMode === 'training') {
+             // Mode Entraînement : On fige tout et on montre le résultat
+             validateBtn.style.display = 'none';
+             nextBtn.style.display = 'inline-block';
+             
+             // Désactiver les boutons
+             buttons.forEach(btn => btn.disabled = true);
+             
+             // Récupérer les bonnes réponses pour l'affichage
+             const correctAnswers = savedAnswer.correctAnswer || (Array.isArray(question.answer) ? question.answer : [question.answer]);
+             
+             if (savedAnswer.isCorrect) {
+                 feedback.textContent = "Bonne réponse !";
+                 feedback.classList.add('success');
+                 // Vert pour les sélections justes
+                 savedAnswer.selected.forEach(idx => {
+                    if(buttons[idx]) buttons[idx].style.backgroundColor = '#2ecc71';
+                 });
+             } else {
+                 feedback.textContent = "Mauvaise réponse."; 
+                 feedback.classList.add('error');
+                 
+                 // Rouge pour les erreurs utilisateur
+                 savedAnswer.selected.forEach(idx => {
+                     if(buttons[idx]) buttons[idx].style.backgroundColor = '#e74c3c';
+                 });
+                 
+                 // Vert pour les bonnes réponses manquées
+                 correctAnswers.forEach(idx => {
+                     if(buttons[idx]) buttons[idx].style.backgroundColor = '#2ecc71';
+                 });
+                 
+                 const correctText = correctAnswers.map(i => question.options[i]).join("<br>- ");
+                 feedback.innerHTML = `Mauvaise réponse. Les bonnes réponses étaient :<br>- ${correctText}`;
+             }
+             
+             // Logic Glossaire 
+             const glossaryTerms = findGlossaryTerms(question.question);
+             if (glossaryTerms.length > 0) {
+                const glossaryContainer = document.createElement('div');
+                glossaryContainer.className = 'glossary-container';
+                glossaryContainer.style.marginTop = '15px';
+                glossaryContainer.style.borderTop = '1px solid #ccc';
+                glossaryContainer.style.paddingTop = '10px';
+                
+                const title = document.createElement('h4');
+                title.textContent = "Mots-clés et Définitions :";
+                title.style.margin = '0 0 10px 0';
+                title.style.fontSize = '0.9em';
+                glossaryContainer.appendChild(title);
+                
+                glossaryTerms.forEach(item => {
+                    const termDiv = document.createElement('div');
+                    termDiv.style.marginBottom = '5px';
+                    termDiv.style.fontSize = '0.9em';
+                    termDiv.innerHTML = `<strong style="color:#2980b9">${item.term}:</strong> ${item.definition}`;
+                    glossaryContainer.appendChild(termDiv);
+                });
+                
+                feedback.appendChild(glossaryContainer);
+            }
+             
+             feedback.style.display = 'block';
+
+        } else {
+             // Mode Exam : On permet de changer la réponse
+             validateBtn.style.display = 'inline-block';
+        }
+    }
 }
 
 function selectOption(index, button, isMultiselect) {
@@ -170,10 +245,21 @@ function validateAnswer() {
     nextBtn.style.display = 'inline-block';
 
     if (currentMode === 'training') {
+        // Sauvegarder la réponse pour l'historique
+        const existingIndex = userAnswers.findIndex(a => a.questionIndex === currentQuestionIndex);
+        if (existingIndex === -1) {
+             userAnswers.push({
+                questionIndex: currentQuestionIndex,
+                selected: [...selectedOptionIndices],
+                isCorrect: isCorrect,
+                correctAnswer: correctAnswers
+            });
+        }
+
         if (isCorrect) {
             feedback.textContent = "Bonne réponse !";
             feedback.classList.add('success');
-            score++;
+            if (existingIndex === -1) score++; // Incrémenter seulement si nouvelle réponse
             // Colorer en vert les sélections (qui sont justes)
             selectedOptionIndices.forEach(idx => {
                if(allButtons[idx]) allButtons[idx].style.backgroundColor = '#2ecc71';
