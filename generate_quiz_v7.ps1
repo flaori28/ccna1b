@@ -253,12 +253,12 @@ $htmlTemplate = @'
         
         <button class="btn btn-mode bg-train" onclick="startQuiz('training')">
             <strong>Mode Entra&icirc;nement</strong><br>
-            <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">Correction imm&eacute;diate question par question.</span>
+            <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">60 questions al&eacute;atoires. Correction imm&eacute;diate.</span>
         </button>
         
         <button class="btn btn-mode bg-exam" onclick="startQuiz('exam')">
             <strong>Mode Examen</strong><br>
-            <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">Pas d'aide, r&eacute;sultat et pourcentage &agrave; la fin.</span>
+            <span style="font-size:0.9em; font-weight:normal; opacity:0.9;">60 questions al&eacute;atoires. R&eacute;sultat final.</span>
         </button>
         
         <div style="margin-top:30px;">
@@ -322,12 +322,9 @@ $htmlTemplate = @'
 
         function startQuiz(mode) {
             currentMode = mode;
-            currentQuestions = [...allQuestions]; // All questions
-            if(mode === 'exam') {
-                // Optional: Shuffle for exam? Let's keep strict order for now per user request options
-                // Or maybe shuffle? User didn't specify, but standard exams are often shuffled.
-                // Let's stick to order so it covers everything linearly as requested "tout les questions".
-            }
+            // Shuffle and take 60 for both modes, as requested by user ("refait le mode examen et entrainement mais avec 60 question... mixtent et melanger a chaque fois")
+            currentQuestions = [...allQuestions].sort(() => 0.5 - Math.random()).slice(0, 60);
+
             initSession();
         }
 
