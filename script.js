@@ -3,6 +3,7 @@ let score = 0;
 let currentMode = ''; // 'training' ou 'exam'
 let userAnswers = []; // Pour stocker les réponses en mode examen
 let selectedOptionIndices = []; // Tableau pour gérer multiples sélections
+let currentQuizQuestions = []; // Questions actives pour la session
 
 // Éléments du DOM
 const homeScreen = document.getElementById('home');
@@ -18,29 +19,60 @@ const feedback = document.getElementById('feedback');
 const counterDisplay = document.getElementById('question-counter');
 const scoreDisplay = document.getElementById('score-display');
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 function startQuiz(mode) {
-    currentMode = mode;
     currentQuestionIndex = 0;
     score = 0;
     userAnswers = [];
     selectedOptionIndices = [];
+    currentQuizQuestions = [];
+
+    // Filter valid questions (ignore null answers)
+    const validQuestions = questions.filter(q => q.answer !== null);
+
+    if (mode === 'training') {
+        currentMode = 'training';
+        currentQuizQuestions = [...validQuestions];
+        scoreDisplay.style.display = 'block';
+    } else if (mode === 'exam') {
+        currentMode = 'exam';
+        currentQuizQuestions = [...validQuestions];
+        scoreDisplay.style.display = 'none';
+    } else if (mode === 'series60') {
+        currentMode = 'exam'; // Exam Blanc is Exam mode
+        scoreDisplay.style.display = 'none';
+        // Random 60 questions
+        currentQuizQuestions = shuffleArray([...validQuestions]).slice(0, 60);
+    } else if (mode && mode.startsWith('series_')) {
+        currentMode = 'training'; // Series are Training
+        scoreDisplay.style.display = 'block';
+        const seriesNum = parseInt(mode.split('_')[1]);
+        const start = (seriesNum - 1) * 10;
+        const end = start + 10;
+        // Take contiguous slice from the valid list
+        currentQuizQuestions = validQuestions.slice(start, end);
+    }
 
     homeScreen.style.display = 'none';
     quizScreen.style.display = 'block';
     resultsScreen.style.display = 'none';
     
-    if (mode === 'training') {
-        scoreDisplay.style.display = 'block';
+    if (currentMode === 'training') {
         updateScoreDisplay();
-    } else {
-        scoreDisplay.style.display = 'none';
     }
 
     loadQuestion();
 }
 
 function loadQuestion() {
-    const question = questions[currentQuestionIndex];
+    const question = currentQuizQuestions[currentQuestionIndex];
     questionText.innerHTML = question.question;
     optionsContainer.innerHTML = '';
     feedback.innerHTML = '';
@@ -61,7 +93,7 @@ function loadQuestion() {
         selectedOptionIndices = [];
     }
     
-    counterDisplay.innerHTML = `Question ${currentQuestionIndex + 1}/${questions.length}`;
+    counterDisplay.innerHTML = `Question ${currentQuestionIndex + 1}/${currentQuizQuestions.length}`;
 
     // Affichage image si présente
     if (question.image) {
@@ -220,7 +252,7 @@ function selectOption(index, button, isMultiselect) {
 function validateAnswer() {
     if (selectedOptionIndices.length === 0) return;
 
-    const question = questions[currentQuestionIndex];
+    const question = currentQuizQuestions[currentQuestionIndex];
     let isCorrect = false;
     let correctAnswers = [];
 
@@ -350,7 +382,7 @@ function prevQuestion() {
 
 function nextQuestion() {
     currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
+    if (currentQuestionIndex < currentQuizQuestions.length) {
         loadQuestion();
     } else {
         showResults();
@@ -365,7 +397,7 @@ function showResults() {
     quizScreen.style.display = 'none';
     resultsScreen.style.display = 'block';
 
-    const percentage = Math.round((score / questions.length) * 100);
+    const percentage = Math.round((score / currentQuizQuestions.length) * 100);
     document.getElementById('final-score').innerHTML = `${percentage}%`;
 
     let messageText = "";
@@ -396,7 +428,7 @@ function showResults() {
             detailsDiv.style.textAlign = 'left';
             
             wrongAnswers.forEach((ans) => {
-                const q = questions[ans.questionIndex];
+                const q = currentQuizQuestions[ans.questionIndex];
                 
                 // Formatter les réponses utilisateur
                 const userRespText = ans.selected.map(i => q.options[i]).join(", ");
