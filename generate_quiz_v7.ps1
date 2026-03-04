@@ -137,6 +137,27 @@ foreach ($chunk in $chunks) {
                  $explanation += "<br><br><strong>Correspondance correcte :</strong><br>" + $tableToRemove
              }
         }
+        
+        # --- SPECIAL FIX FOR Q27 (Hidden Matching in Explanation) ---
+        if ($type -eq "info" -and $explanation -match 'Le réseau [A-Z] doit utiliser') {
+             $matchesFound = [regex]::Matches($explanation, 'Le réseau ([A-Z]) doit utiliser\s*([\d\./ ]+)')
+             foreach ($m in $matchesFound) {
+                 $term = "R&eacute;seau " + $m.Groups[1].Value
+                 $def = $m.Groups[2].Value.Trim()
+                 # Clean trailing punctuation
+                 $def = $def -replace '[,.]$', ''
+                 $def = $def.Trim()
+                 
+                 if ($term -ne "" -and $def -ne "") {
+                    $matchingPairs += @{ term = $term; definition = $def }
+                 }
+             }
+             
+             if ($matchingPairs.Count -gt 0) {
+                 $type = "matching"
+                 $fullText += "<br><em>(Associez les r&eacute;seaux selon l'explication attendue)</em>"
+             }
+        }
 
         # Add remaining HTML (like intro text) to the question title/body
         $fullText = $qTitle
