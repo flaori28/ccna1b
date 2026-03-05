@@ -139,8 +139,9 @@ foreach ($chunk in $chunks) {
         }
         
         # --- SPECIAL FIX FOR Q27 (Hidden Matching in Explanation) ---
-        if ($type -eq "info" -and $explanation -match 'Le réseau [A-Z] doit utiliser') {
-             $matchesFound = [regex]::Matches($explanation, 'Le réseau ([A-Z]) doit utiliser\s*([\d\./ ]+)')
+        # Relaxed regex to handle potential encoding issues (rÃ©seau vs réseau)
+        if ($type -eq "info" -and $explanation -match 'Le r.*?seau [A-Z] doit utiliser') {
+             $matchesFound = [regex]::Matches($explanation, 'Le r.*?seau ([A-Z]) doit utiliser\s*([\d\./ ]+)')
              foreach ($m in $matchesFound) {
                  $term = "R&eacute;seau " + $m.Groups[1].Value
                  $def = $m.Groups[2].Value.Trim()
@@ -157,6 +158,22 @@ foreach ($chunk in $chunks) {
                  $type = "matching"
                  $fullText += "<br><em>(Associez les r&eacute;seaux selon l'explication attendue)</em>"
              }
+        }
+
+        # --- SPECIAL FIX FOR Q33 (Store-and-forward) ---
+        if ($qNum -eq 33) {
+             # Hardcoded deduction from explanation
+             $matchingPairs += @{ term = "Commutateur store-and-forward"; definition = "Stocke la trame enti&egrave;re et v&eacute;rifie le CRC avant transmission" }
+             $matchingPairs += @{ term = "Commutateur direct (Cut-through)"; definition = "Transmet la trame avant de recevoir toute l'adresse de destination (faible latence)" }
+             $type = "matching"
+             $fullText += "<br><em>(Associez les m&eacute;thodes de commutation)</em>"
+        }
+
+        # --- FILTER BROKEN MATCHING QUESTIONS ---
+        # If it asks to match/associate but we found no pairs (and didn't fix it above), skip it to avoid broken UI
+        if ($type -eq "info" -and ($matchingPairs.Count -eq 0) -and ($qTitle -match "Associez" -or $qTitle -match "Correspondre" -or $qTitle -match "Reliez")) {
+             Write-Host "SKIPPING QUESTION $qNum - Broken Matching Question (No text content found)" -ForegroundColor Yellow
+             continue 
         }
 
         # Add remaining HTML (like intro text) to the question title/body

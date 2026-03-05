@@ -170,7 +170,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour configurer SSH, un routeur nécessite un nom de domaine IP pour générer les clés de chiffrement RSA. Une fois les clés générées (\u0027crypto key generate rsa\u0027), l\u0027activation du protocole SSH sur les lignes VTY (\u0027transport input ssh\u0027) est indispensable pour autoriser uniquement les connexions sécurisées et remplacer Telnet.",
         "image":  null
     },
     {
@@ -253,7 +253,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Un masque de 255.255.255.248 (/29) alloue 3 bits pour les hôtes, offrant ainsi 6 adresses utilisables (2^3 - 2). Cela suffit parfaitement pour 4 périphériques tout en minimisant le gaspillage d\u0027adresses, contrairement au /27 (30 hôtes) qui est trop grand ou au /30 (2 hôtes) qui est trop petit.",
         "image":  null
     },
     {
@@ -348,7 +348,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le port 69, utilisant le protocole UDP, est le port standard réservé à l\u0027application TFTP (Trivial File Transfer Protocol). TFTP est couramment utilisé pour transférer des fichiers de configuration ou des images IOS de manière simplifiée vers des périphériques réseau, contrairement au DNS (53) ou au SMTP (25).",
         "image":  null
     },
     {
@@ -377,7 +377,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Un cheval de Troie est un type de logiciel malveillant qui se déguise en programme légitime pour inciter l\u0027utilisateur à l\u0027installer. Contrairement aux virus, il ne se reproduit pas de lui-même, mais il ouvre souvent une porte dérobée (backdoor) permettant à un attaquant de prendre le contrôle du système.",
         "image":  null
     },
     {
@@ -439,7 +439,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La commande \u0027ipconfig\u0027 est l\u0027outil standard sous Windows pour afficher rapidement la configuration IP actuelle, incluant l\u0027adresse IP, le masque et la passerelle. Pour des détails plus complets comme l\u0027adresse MAC ou les serveurs DNS, la variante \u0027ipconfig /all\u0027 serait utilisée.",
         "image":  null
     },
     {
@@ -497,7 +497,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le champ TTL (Time To Live) de l\u0027en-tête IP sert à empêcher les boucles de routage infinies. Chaque routeur traversé diminue ce compteur de 1. Si la valeur atteint 0, le routeur rejette le paquet (drop) et renvoie un message ICMP \u0027Time Exceeded\u0027 à l\u0027expéditeur.",
         "image":  null
     },
     {
@@ -526,7 +526,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "HTTPS utilise les protocoles SSL/TLS pour chiffrer les données échangées entre le client web et le serveur. Cela garantit la confidentialité et l\u0027intégrité des informations sensibles (comme les mots de passe ou les données bancaires), contrairement au HTTP standard qui transmet tout en texte clair.",
         "image":  null
     },
     {
@@ -563,7 +563,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Dans une table de routage, le code \u0027S\u0027 identifie explicitement une route statique configurée manuellement par un administrateur (comme une route par défaut). Les réseaux directement rattachés sont marqués par le code \u0027C\u0027 (Connected), car le routeur connaît le chemin dès que l\u0027interface est active.",
         "image":  null
     },
     {
@@ -782,7 +782,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le champ Séquence de contrôle de trame (FCS) situé à la fin de la trame Ethernet contient une valeur CRC (contrôle de redondance cyclique). Cette valeur permet au destinataire de vérifier l\u0027intégrité des données reçues : si le calcul ne correspond pas, la trame est considérée comme corrompue et est rejetée.",
         "image":  null
     },
     {
@@ -811,7 +811,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "ZigBee est une technologie sans fil conçue spécifiquement pour les applications à faible débit et faible consommation d\u0027énergie, comme la domotique (capteurs, interrupteurs). Elle permet aux périphériques de fonctionner longtemps sur batterie, contrairement au Wi-Fi qui est plus puissant mais plus énergivore.",
         "image":  null
     },
     {
@@ -877,7 +877,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Lors de la conception d\u0027un WLAN, il est crucial de planifier la \u0027Zone de couverture\u0027 pour éviter les zones mortes, de gérer les \u0027Perturbations\u0027 (interférences d\u0027autres ondes) et d\u0027assurer une \u0027Sécurité\u0027 robuste, car les signaux radio sont par nature accessibles à tous dans le périmètre.",
         "image":  null
     },
     {
@@ -963,7 +963,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour utiliser un masque unique sur tous les sous-réseaux, on doit dimensionner le masque selon le plus grand besoin, qui est ici de 22 hôtes (Téléphones IP). Le masque /27 (255.255.255.224) offre 30 adresses hôtes, ce qui couvre ce besoin. Un masque /28 (14 hôtes) serait insuffisant.",
         "image":  null
     },
     {
@@ -1090,7 +1090,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La sous-couche MAC de la liaison de données gère l\u0027accès au support physique. Elle délimite les trames (framing) pour la synchronisation, ajoute l\u0027adressage physique (MAC), et gère la détection d\u0027erreurs (FCS). Elle contrôle également comment les données sont placées sur le média (via CSMA par exemple).",
         "image":  null
     },
     {
@@ -1119,7 +1119,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour identifier un problème de performance, il faut comparer l\u0027état actuel du réseau à ses \u0027performances de référence\u0027 (baseline). Cette référence représente le comportement normal du réseau (latence, débits) établi lors d\u0027une période de fonctionnement optimal.",
         "image":  null
     },
     {
@@ -1160,7 +1160,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Dans ce scénario de dépannage, \u0027ipconfig\u0027 vérifie la configuration locale (IP, masque), \u0027ping\u0027 teste la connectivité réseau de base vers la passerelle, et \u0027nslookup\u0027 diagnostique spécifiquement les problèmes de résolution de noms DNS, souvent coupables quand l\u0027accès Internet semble échouer.",
         "image":  null
     },
     {
@@ -1265,7 +1265,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Lorsqu\u0027un paquet traverse un réseau routé, les adresses IP source et destination restent inchangées de bout en bout. En revanche, les adresses MAC (Couche 2) changent à chaque saut de routeur, car elles ne servent qu\u0027à la livraison locale entre deux équipements adjacents sur le lien de données.",
         "image":  null
     },
     {
@@ -1308,7 +1308,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le cloud computing permet aux entreprises d\u0027étendre leurs capacités informatiques sans devoir investir massivement dans de nouvelles infrastructures physiques (serveurs, locaux). Elles consomment les ressources en tant que service, transformant les coûts fixes d\u0027investissement en coûts opérationnels variables.",
         "image":  null
     },
     {
@@ -1341,7 +1341,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "ARP (Address Resolution Protocol) permet de trouver l\u0027adresse MAC associée à une adresse IPv4 connue. Si une IP est sur le réseau local mais que son MAC est inconnu, l\u0027hôte diffuse une requête ARP. Le périphérique possédant cette IP répond alors par un message unicast contenant son adresse MAC.",
         "image":  null
     },
     {
@@ -1436,7 +1436,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La messagerie instantanée (IM) est un service Internet qui permet des échanges textuels en temps réel entre utilisateurs. Contrairement aux emails qui sont stockés et lus plus tard, l\u0027IM suppose une interaction synchrone et directe.",
         "image":  null
     },
     {
@@ -1647,7 +1647,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La commande \u0027ipv6 unicast-routing\u0027 active le routage IPv6 sur le routeur. Cela déclenche l\u0027envoi périodique de messages d\u0027Annonce de Routeur (RA) via ICMPv6, indispensables pour que les hôtes du réseau puissent s\u0027autoconfigurer dynamiquement via SLAAC.",
         "image":  null
     },
     {
@@ -1676,7 +1676,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Lorsqu\u0027un paquet quitte un hôte vers un routeur, les adresses de Couche 3 (IP) sont celles de la source originale et de la destination finale. Les adresses de Couche 2 (MAC), cependant, sont locales : l\u0027adresse MAC destination sera celle de l\u0027interface de la passerelle (le routeur), pas celle de l\u0027hôte distant.",
         "image":  "https://ccnareponses.com/wp-content/uploads/2021/12/2021-11-12_000249.jpg"
     },
     {
@@ -1713,7 +1713,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le scénario décrit une connexion sécurisée (authentification), de haute qualité (QoS pour la vidéo), et qui résiste aux pannes (basculement automatique sur lien secondaire). La \u0027Tolérance aux pannes\u0027 est ici démontrée par la continuité de service malgré l\u0027échec du lien principal.",
         "image":  null
     },
     {
@@ -1808,7 +1808,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour communiquer, les protocoles doivent s\u0027accorder sur le formatage/codage des données (encodage), la taille des messages (segmentation), et les options de livraison (comme les accusés de réception). Sans ces règles communes, le récepteur ne pourrait pas interpréter le signal.",
         "image":  null
     },
     {
@@ -1878,7 +1878,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "DNS (Domain Name System) et POP (Post Office Protocol) sont des protocoles de la couche Application du modèle TCP/IP. Ils fournissent des services réseau directement aux logiciels utilisateurs, contrairement à TCP/UDP (Transport) ou IP (Internet).",
         "image":  null
     },
     {
@@ -2076,7 +2076,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "L\u0027adresse IPv6 \u0027FF02::2\u0027 est une adresse de multidiffusion réservée à \u0027tous les routeurs\u0027 sur le lien local (link-local). Elle est utilisée par les hôtes pour communiquer spécifiquement avec les routeurs présents sur le même segment physique, par exemple pour solliciter une configuration (RS).",
         "image":  null
     },
     {
@@ -2105,7 +2105,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Après avoir généré une adresse IPv6 via SLAAC, un hôte doit vérifier son unicité pour éviter les conflits. Il utilise le processus DAD (Duplicate Address Detection) en envoyant une Sollicitation de Voisin (NS) pour sa propre adresse. S\u0027il ne reçoit pas de réponse, l\u0027adresse est valide.",
         "image":  null
     },
     {
@@ -2200,7 +2200,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour 10 hôtes, le masque /28 (16 adresses, 14 utiles) est le plus adapté pour économiser les adresses. Le sous-réseau 10.18.10.224/28 est un bloc valide qui répond à ce besoin. Un masque /27 gaspillerait trop d\u0027adresses (30 utiles) pour seulement 10 machines.",
         "image":  "https://ccnareponses.com/wp-content/uploads/2021/12/2021-12-20_214907.jpg"
     },
     {
@@ -2266,7 +2266,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Les installations de câblage structuré respectent des normes strictes concernant le type de connecteurs (ex: RJ45), le brochage (tels que T568A/B), et la longueur maximale des câbles (ex: 100m pour le cuivre) afin d\u0027assurer l\u0027interopérabilité et la performance du signal.",
         "image":  null
     },
     {
@@ -2328,7 +2328,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Les câbles cuivre UTP sont sensibles aux interférences électromagnétiques (EMI) provenant des lampes fluorescentes ou moteurs, et aux interférences radio (RFI). Ces bruits externes peuvent corrompre les signaux de données, d\u0027où l\u0027importance de les éloigner des sources électriques.",
         "image":  null
     },
     {
@@ -2357,7 +2357,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le service DNS est fondamental pour Internet car il traduit les noms de domaine lisibles par les humains (comme www.google.com) en adresses IP numériques utilisables par les machines. Sans DNS, nous devrions mémoriser les adresses IP de chaque site web.",
         "image":  null
     },
     {
@@ -2427,7 +2427,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La couche réseau (OSI 3) fournit l\u0027adressage logique (IP) pour identifier les périphériques de manière unique sur l\u0027inter-réseau et assure le routage, c\u0027est-à-dire la détermination du chemin optimal pour acheminer les paquets vers leur destination finale à travers différents réseaux.",
         "image":  null
     },
     {
@@ -2460,7 +2460,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Dans l\u0027en-tête IPv6, le champ \u0027Time-to-Live\u0027 (TTL) d\u0027IPv4 a été renommé \u0027Hop Limit\u0027 pour plus de clarté, bien que sa fonction (éviter les boucles) reste la même. Le champ \u0027Adresse Source\u0027 est conservé, mais agrandi à 128 bits.",
         "image":  null
     },
     {
@@ -2547,7 +2547,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour un besoin de 200 hôtes, il faut 8 bits d\u0027hôte (2^8 = 256 adresses). Cela correspond à un masque /24 (255.255.255.0). C\u0027est le plus petit sous-réseau possible pouvant contenir 200 machines, car le masque suivant (/25) ne permettrait que 126 hôtes.",
         "image":  null
     },
     {
@@ -2576,7 +2576,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La couche de liaison de données (Couche 2) prépare les données pour la transmission sur le réseau physique. Elle est responsable de l\u0027échange de trames entre les nœuds sur un support commun, gérant l\u0027adressage MAC et l\u0027accès au média.",
         "image":  null
     },
     {
@@ -2609,7 +2609,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Si l\u0027IP de destination n\u0027est pas sur le même réseau local, l\u0027hôte doit envoyer le paquet à sa passerelle par défaut. Il envoie donc une requête ARP pour obtenir l\u0027adresse MAC de l\u0027interface de cette passerelle (routeur), et non celle de la destination finale.",
         "image":  null
     },
     {
@@ -2732,7 +2732,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "L\u0027utilitaire `tracert` (ou `traceroute`) envoie une série de paquets pour déterminer le chemin pris jusqu\u0027à une destination. Il liste tous les routeurs traversés et les temps de réponse, ce qui permet d\u0027identifier l\u0027emplacement d\u0027un ralentissement réseau.",
         "image":  null
     },
     {
@@ -2815,7 +2815,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le port 22 est le port standard assigné au protocole SSH (Secure Shell). SSH fournit une connexion administrative sécurisée et chiffrée, contrairement à Telnet (port 23) ou TFTP (port 69).",
         "image":  null
     },
     {
@@ -2848,7 +2848,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La sous-couche LLC identifie le protocole de couche réseau (via le champ EtherType) pour permettre à plusieurs protocoles (IPv4, IPv6) de coexister sur le même support physique. Elle gère la communication logicielle entre les couches supérieures et le matériel.",
         "image":  null
     },
     {
@@ -2877,7 +2877,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La commutation \u0027store-and-forward\u0027 (stockage et retransmission) reçoit la trame entière et vérifie le champ FCS (Frame Check Sequence) avant de la transmettre. Si une erreur est détectée, la trame est supprimée, assurant une fiabilité maximale.",
         "image":  null
     },
     {
@@ -2906,7 +2906,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour 61 hôtes, il faut 6 bits d\u0027hôte (2^6 - 2 = 62 adresses utiles). Un masque de sous-réseau avec 26 bits de réseau (/26) correspond à 255.255.255.192. Un masque /27 ne fournirait que 30 adresses, ce qui est insuffisant.",
         "image":  null
     },
     {
@@ -2939,7 +2939,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour accéder à un site Internet externe (comme www.cisco.com), un ordinateur a besoin d\u0027une passerelle par défaut (pour sortir du réseau local) et d\u0027une adresse de serveur DNS (pour traduire le nom de domaine en adresse IP).",
         "image":  null
     },
     {
@@ -2968,7 +2968,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "DHCP (Dynamic Host Configuration Protocol) simplifie la gestion du réseau en attribuant automatiquement et dynamiquement les adresses IP, les masques de sous-réseau et d\u0027autres paramètres aux périphériques lors de leur connexion.",
         "image":  null
     },
     {
@@ -2997,7 +2997,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le préfixe global est /56. Les sous-réseaux IPv6 standard utilisent un préfixe /64 pour l\u0027interface. La différence est de 64 - 56 = 8 bits. 2 puissance 8 permet de créer 256 sous-réseaux distincts.",
         "image":  null
     },
     {
@@ -3127,7 +3127,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La principale caractéristique de la couche liaison de données est d\u0027isoler les couches supérieures des détails physiques. Elle permet aux protocoles comme IP de fonctionner sans savoir si les données voyagent sur du câble Ethernet, de la fibre optique ou du Wi-Fi.",
         "image":  null
     },
     {
@@ -3189,7 +3189,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Si le ping vers l\u0027extérieur fonctionne, le routage est opérationnel. L\u0027échec du ping vers la passerelle elle-même indique généralement que la passerelle est configurée (par un pare-feu ou une ACL) pour bloquer ou ignorer les requêtes ICMP pour des raisons de sécurité.",
         "image":  null
     },
     {
@@ -3350,7 +3350,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Certains commutateurs \u0027cut-through\u0027 surveillent les erreurs. S\u0027ils détectent trop de trames corrompues (seuil d\u0027erreur atteint), ils basculent automatiquement en mode \u0027store-and-forward\u0027 pour vérifier chaque trame et éliminer les erreurs avant de revenir au mode rapide.",
         "image":  null
     },
     {
@@ -3383,7 +3383,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "RTP (Real-Time Transport Protocol) est un protocole conçu pour les flux de données sensibles au délai et nécessitant une synchronisation précise, comme la voix sur IP (VoIP) et la vidéo en temps réel.",
         "image":  null
     },
     {
@@ -3420,7 +3420,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "IPv6 utilise le protocole NDP et de nouveaux messages ICMPv6 inexistants en IPv4, notamment la \u0027Sollicitation de voisin\u0027 (remplaçant ARP) et l\u0027\u0027Annonce de routeur\u0027 (pour l\u0027auto-configuration des adresses).",
         "image":  null
     },
     {
@@ -3449,7 +3449,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "SMTP (Simple Mail Transfer Protocol) est utilisé par les clients pour *envoyer* des courriels vers un serveur, et par les serveurs pour s\u0027échanger des courriels. La récupération des messages se fait via d\u0027autres protocoles comme POP3 ou IMAP.",
         "image":  null
     },
     {
@@ -3486,7 +3486,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "En IPv6, le protocole ARP est remplacé par NDP (Neighbor Discovery Protocol) via ICMPv6. La résolution d\u0027adresse MAC se fait par un échange de messages \u0027Sollicitation de voisin\u0027 (demande) et \u0027Annonce de voisin\u0027 (réponse).",
         "image":  null
     },
     {
@@ -3515,7 +3515,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "SSH (Secure Shell) est la méthode recommandée pour l\u0027accès à distance en ligne de commande (CLI) car elle chiffre toute la session, y compris les mots de passe. Telnet envoie les données en clair, ce qui est risqué.",
         "image":  null
     },
     {
@@ -3544,7 +3544,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le port 110 est le port TCP réservé au protocole POP3, qui permet aux clients de messagerie de récupérer et télécharger les courriels depuis un serveur de messagerie.",
         "image":  null
     },
     {
@@ -3784,7 +3784,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le port 21 est le port de contrôle standard pour FTP (File Transfer Protocol), utilisé pour l\u0027authentification et l\u0027envoi de commandes entre le client et le serveur.",
         "image":  null
     },
     {
@@ -3813,7 +3813,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "POP3 est un protocole de récupération de courriels. Il se connecte au serveur, télécharge les messages sur le client local et, par défaut, les supprime du serveur (contrairement à IMAP qui synchronise les messages).",
         "image":  null
     },
     {
@@ -3842,7 +3842,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour 40 terminaux, il faut au moins 6 bits pour la partie hôte (2^6 = 64). Le masque /26 (255.255.255.192) fournit 62 adresses utilisables. C\u0027est le masque le plus adapté pour éviter le gaspillage (le /25 est trop grand, le /27 trop petit).",
         "image":  null
     },
     {
@@ -3871,7 +3871,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le port 80 est le port TCP standard pour le trafic HTTP (web non sécurisé). Lorsqu\u0027un navigateur accède à un site web sans chiffrement (http://...), il utilise ce port par défaut.",
         "image":  null
     },
     {
@@ -3900,7 +3900,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour 10 périphériques, 4 bits d\u0027hôte suffisent (2^4 - 2 = 14 adresses). Cela correspond à un masque /28, soit 255.255.255.240. C\u0027est le plus petit masque réseau capable de supporter ce nombre d\u0027hôtes.",
         "image":  null
     },
     {
@@ -3929,7 +3929,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La table qui associe les adresses IP (Couche 3) aux adresses MAC (Couche 2) est la table ARP. Le protocole ARP construit cette table dynamiquement en diffusant des requêtes sur le réseau local.",
         "image":  "https://ccnareponses.com/wp-content/uploads/2021/12/2024-10-13_160909.jpg"
     },
     {
@@ -4038,7 +4038,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "La sous-couche MAC (Media Access Control) a deux responsabilités principales : contrôler l\u0027accès au support physique (pour éviter les collisions) et effectuer l\u0027encapsulation des données (adressage MAC, délimitation).",
         "image":  null
     },
     {
@@ -4096,7 +4096,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Une fois que le routeur détermine que l\u0027IP de destination appartient à un réseau directement connecté, il n\u0027a pas besoin de chercher un autre saut. Il encapsule le paquet dans une trame de couche 2 et l\u0027envoie directement à l\u0027appareil cible sur cette interface.",
         "image":  null
     },
     {
@@ -4129,7 +4129,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Une adresse IPv6 globale unicast est composée de trois parties : le préfixe de routage global (attribué par le FAI), l\u0027ID de sous-réseau (géré par l\u0027organisation) et l\u0027ID d\u0027interface (identifiant unique de l\u0027hôte).",
         "image":  null
     },
     {
@@ -4187,7 +4187,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Le port 53 est le port standard pour le service DNS (Domain Name System). Les clients envoient des requêtes à ce port pour résoudre les noms de domaine (ex: www.google.com) en adresses IP.",
         "image":  null
     },
     {
@@ -4212,7 +4212,7 @@
                             "isCorrect":  true
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Pour 25 hôtes, il faut 5 bits d\u0027hôte (2^5 = 32 adresses - 2 = 30 utilisables). Le masque /27 (255.255.255.224) est le plus petit masque capable de contenir ce nombre d\u0027appareils.",
         "image":  null
     },
     {
@@ -4255,7 +4255,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Une attaque par déni de service (DoS) vise à compromettre la disponibilité d\u0027un réseau ou d\u0027un service en le saturant de trafic illégitime, ce qui le ralentit considérablement ou le rend totalement inaccessible.",
         "image":  null
     },
     {
@@ -4298,7 +4298,7 @@
                             "isCorrect":  false
                         }
                     ],
-        "explanation":  "",
+        "explanation":  "Un IPS (Intrusion Prevention System) est un dispositif de sécurité actif. Contrairement à un simple IDS qui alerte, l\u0027IPS peut analyser le trafic en temps réel et bloquer ou rejeter les paquets malveillants identifiés.",
         "image":  null
     },
     {
