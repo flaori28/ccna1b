@@ -4716,7 +4716,7 @@
             if(currentMode === 'exam' && totalScorable >= 50) { // Assuming exam roughly 60
                 const passed = pct >= 80; // CCNA usually strict (~80-82%)
                 extraMsg = `<div style="margin-top:20px; font-size:1.2em; font-weight:bold; color:${passed?'green':'red'}">
-                                ${passed ? 'Fà‰LICITATIONS ! VOUS AVEZ Rà‰USSI L\'EXAMEN !' : 'CHEC. VOUS DEVEZ ENCORE RVISER.'}
+                                ${passed ? 'FÉLICITATIONS ! VOUS AVEZ RÉUSSI L\'EXAMEN !' : 'ÉCHEC. VOUS DEVEZ ENCORE RÉVISER.'}
                             </div>`;
             }
 
@@ -4733,7 +4733,7 @@
                 date: new Date().toISOString(),
                 pct: pct,
                 score: `${correct}/${total}`,
-                mode: mode === 'exam' ? 'Examen' : (mode === 'training' && total === 10 ? 'S'rie' : 'Entranement')
+                mode: mode === 'exam' ? 'Examen' : (mode === 'training' && total === 10 ? 'Série' : 'Entraînement')
             };
             history.unshift(entry); // Add to top
             // Limit to last 50
